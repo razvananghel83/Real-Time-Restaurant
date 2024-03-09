@@ -1,4 +1,5 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Descriere proiect:
+O aplicație C++ care poate adăuga utilitate unui restaurant prin vizualizarea în timp real a comenzilor de la clienți de către bucătărie, dar și afișarea timpului de preparare pentru fiecare comandă, de la fiecare masă. A plicația permite clientului să comande mâncarea dorită și personalului din bucătărie să modifice timpul de preparare.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
