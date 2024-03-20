@@ -72,4 +72,6 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 
 ## Resurse
 
-- adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
+- https://en.cppreference.com/w/cpp/container/vector
+- https://en.cppreference.com/w/cpp/chrono/duration
+- https://youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&si=CRlRvLV8GhNArmSx
