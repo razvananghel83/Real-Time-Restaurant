@@ -15,7 +15,7 @@ Order::Order() {
 }
 
 // Constructor with parametres :
-Order::Order(  std::vector< std::shared_ptr<MenuItem> > list)  : Items(list)  {
+Order::Order(  const std::vector< std::shared_ptr<MenuItem> >& list)  : Items(list)  {
 
     staticOrderId++;
     this->orderId = staticOrderId;

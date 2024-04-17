@@ -53,4 +53,6 @@ int main() {
 
     std::cout << t1 << t2 << t3;
 
+    std::cout << orders.at(3).getItems().at(4)->getCalories();
+
 }

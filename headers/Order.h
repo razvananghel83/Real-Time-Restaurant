@@ -29,7 +29,7 @@ public:
     /// Constructor with parametres : \n
     /// deleted because the id will be implemented automatically via the staticId field
     Order(int id,  std::vector< std::shared_ptr<MenuItem> > list) = delete;
-    Order(  std::vector< std::shared_ptr<MenuItem> > list );
+    explicit Order( const std::vector< std::shared_ptr<MenuItem> >& list );
 
     // Copy constructor :
     Order(Order &order);
