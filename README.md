@@ -75,3 +75,6 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 - https://en.cppreference.com/w/cpp/container/vector
 - https://en.cppreference.com/w/cpp/chrono/duration
 - https://youtube.com/playlist?list=PLlrATfBNZ98dudnM48yfGUldqGD0S4FFb&si=CRlRvLV8GhNArmSx
+- https://stackoverflow.com/questions/5839132/c-how-to-make-two-programs-communicate
+- https://github.com/gruberchris/WinsockDemo/tree/master
+- https://learn.microsoft.com/en-us/windows/win32/winsock/initializing-winsock
