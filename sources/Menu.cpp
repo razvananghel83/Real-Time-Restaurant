@@ -3,61 +3,90 @@
 //
 
 #include "../headers/Menu.h"
+#include "../headers/MyExceptions.h"
 
 
-// Getter :
+Menu::Menu() {
+
+    this->MenuList.reserve(50);
+}
+
+
+// Getter for the list of items :
 const std::vector<MenuItem> &Menu::getMenuList() const {
     return MenuList;
 }
 
-void Menu::setMenuList(const std::vector<MenuItem> &newList) {
-    MenuList = newList;
-}
 
+// Class methods :
 
-// Other vector methods:
-void Menu::clearMenu() {
-    MenuList.clear();
-}
+void Menu::readMenu(std::basic_ifstream<char> &file) {
 
-void Menu::addItem(MenuItem &item) {
-    MenuList.emplace_back(item);
-}
-
-void Menu::removeItem(MenuItem &item) {
-
-    for (auto it = MenuList.begin(); it != MenuList.end(); it++) {
-        if (item == *it) {
-            MenuList.erase(it);
-            break;
-        }
+    try {
+        if( !file.is_open() )
+            throw FileNotOpened();
     }
-}
-
-void Menu::replaceItem(MenuItem &oldItem, MenuItem &newItem) {
-
-    for (auto &Item: MenuList) {
-        if (oldItem == Item) {
-            Item = newItem;
-            break;
-        }
+    catch ( FileNotOpened& e ) {
+        std::cout << e.what();
     }
+
+    std::string line;
+
+    while (std::getline(file, line)) {
+
+        // reads an actual MenuItem as a string
+
+        std::vector<std::string> sections;
+        std::istringstream stringStream(line);
+        std::string section;
+
+        while (std::getline(stringStream, section, ';')) {
+
+            int index = 0;
+            if( section[index] == ' ' )
+                while ( index < section.length() ) {
+                    section[ index ] = section[ index + 1 ];
+                    index++;
+                }
+
+            sections.push_back(section);
+        }
+
+        int number = 0;
+
+        for (int index = 0; isdigit(sections[5][index]); index++) {
+
+            int digit = sections[5][index] - 48;
+            number = number * 10 + digit;
+        }
+
+        std::chrono::minutes duration(number);
+
+        this->MenuList.emplace_back(sections[0], sections[1], std::stof(sections[2]),
+                                    std::stoi( sections[ 3 ] ), std::stoi(sections[4]),
+                                    duration);
+        std::getline(file, line);  // reads an empty new line
+    }
+
 }
 
-int Menu::MenuLength() const {
-    return MenuList.size();
-}
 
 
 // Operators :
 
 
-std::ostream& operator << (std::ostream &out, const Menu &menu) {
-    out << "The list of items available to order is: \n";
+std::ostream &operator<<(std::ostream &out, const Menu &menu) {
 
-    for (const auto &it: menu.MenuList)
-        out << it;
-    out << "\n\n";
+    out << "The list of items available to order is: \n";
+    auto it = menu.getMenuList().begin();
+
+
+    while (it != std::prev(menu.getMenuList().end())) {
+        out >> (*it);
+        ++it;
+    }
+    out >> (*it) << "\n\n";
 
     return out;
 }
+

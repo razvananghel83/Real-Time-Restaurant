@@ -8,27 +8,27 @@
 #include "Order.h"
 
 class Table {
+
 private:
-    int tableId{0};
+
     bool occupied{false};
     Order order;
 
+    int tableId{0};
+    static int staticId;
 
 public:
 
     // Constructors :
 
     // Default constructor :
-    Table() = default;
+    Table();
 
     // Constructor parametrizabil :
-    Table(int tableId, bool occupied, Order &order)
-            : tableId(tableId), occupied(occupied), order(order) {
-
-    }
+    Table(bool occupied, Order &order);
 
     // Copy constructor :
-    Table(Table &otherTable) = default;
+    Table(Table &otherTable);
 
 
     // Destructor :
@@ -36,24 +36,8 @@ public:
 
 
 
-
-    // Getters and setters :
-
-    // Id field :
-    int getId() const;
-
-    void setId(int newId);
-
-    // Occupied field :
-    bool getOccupied() const;
-
-    void setOccupied(bool newState);
-
-    void placeOrder(Order &order);
-
     // Operators :
-    Table &operator=(const Table &otherTable) = default;
-
+    [[nodiscard]] Table &operator=(const Table &otherTable);
     friend std::ostream &operator<<(std::ostream &out, const Table &table);
 
 };

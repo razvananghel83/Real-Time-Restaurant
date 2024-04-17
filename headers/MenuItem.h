@@ -10,86 +10,66 @@
 
 
 using namespace std::chrono;
+std::ostream &operator<<(std::ostream &out, const std::chrono::minutes &duration);  // nu stiu daca e bine sa il las aici
+// din main nu e vizibil, daca il las doar in MenuItem.cpp
+
 
 class MenuItem {
 
 private:
+
     std::string name;
     std::string category;
     float price{0.0f};
-    int itemId{0};
     int pieces{0};
-    std::chrono::minutes preparationTime{0min};
 
+protected:
+
+    int quantity{0};
+
+private:
+
+    std::chrono::minutes preparationTime{0min};
+    int itemId{0};
+    static int staticItemId;
+    static std::string unit;
 
 public:
 
     // Constructors :
 
+
     // Default constructor :
-    MenuItem() = default;
+    MenuItem();
 
     // Constructor with parametres :
-    MenuItem(const std::string &name, const std::string &category, float price, int itemId, int pieces,
-             std::chrono::minutes preparationTime)
-            : name(name), category(category), price(price), itemId(itemId), pieces(pieces),
-              preparationTime(preparationTime) {
-
-    }
+    MenuItem(const std::string &name, const std::string &category, float price, int pieces, int quantity, std::chrono::minutes preparationTime);
 
     // Copy constructor :
-    MenuItem(MenuItem const &Item) = default;
+    MenuItem(MenuItem const &Item);
 
     // Destructor :
     ~MenuItem() = default;
 
 
-    // Getters and setters :
+    // Getters :
+    [[nodiscard]] float getPrice() const;
+    [[nodiscard]] int getPieces() const;
+    [[nodiscard]] std::chrono::minutes getPreparationTime() const;
 
-    // Name field
-    const std::string &getName() const;
-
-    void setName(const std::string &newName);
-
-
-    // Categoty field
-    const std::string &getCategoty() const;
-
-    void setCategory(const std::string &newCategory);
-
-
-    // Price field
-    float getPrice() const;
-
-    void setPrice(const float &newPrice);
-
-
-    // Id field
-    int getId() const;
-
-    void setId(const int &newId);
-
-
-    // Pieces field:
-    int getPieces() const;
-
-    void setPieces(const int &newNumberOfPieces);
-
-    // preparationTime field
-    std::chrono::minutes getPreparationTime() const;
-
-    void setPreparationTime(const std::chrono::minutes &duration);
-
+    // Virtual function :
+    virtual float getCalories();
 
     // Operators :
-    MenuItem& operator = (const MenuItem &item) = default;
+    [[nodiscard]] MenuItem& operator = (const MenuItem &Item);
 
-//    friend std::ostream& operator <*< ( std::ostream &out, const MenuItem &item );
+    friend std::ostream& operator >> ( std::ostream &out, const MenuItem &item );
     friend std::ostream& operator << ( std::ostream &out, const MenuItem &item );
 
     bool operator == (const MenuItem &item) const;
-
     bool operator != (const MenuItem &item) const;
 };
+
+static std::string unit = "Unknown";
 
 #endif //REAL_TIME_RESTAURANT_MENUITEM_H

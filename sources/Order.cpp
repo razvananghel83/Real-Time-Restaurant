@@ -5,46 +5,54 @@
 #include "../headers/Order.h"
 
 
+// Construstors:
 
-/* Every Items field will have 5 locations reserved for it in the memory because I considered that most people tipically order maximum
- * 5 MenuItems, beverages included. In other words, I am assuming that a client will order:
- * First Beverage, First course, Second Beverage, Second Course, Desert
- */
+// Default constructor:
+Order::Order() {
 
-
-// Getters and setters:
-
-
-// Order_Id field:
-int Order::getOrderId() const {
-    return orderId;
+    staticOrderId++;
+    this->orderId = staticOrderId;
 }
 
-void Order::setOrderId(int newOrderId) {
-    orderId = newOrderId;
+// Constructor with parametres :
+Order::Order(  std::vector< std::shared_ptr<MenuItem> > list)  : Items(list)  {
+
+    staticOrderId++;
+    this->orderId = staticOrderId;
 }
 
+// Copy constructor :
+Order::Order (Order &order)
+    : Items(order.Items){
 
-// Items field:
-const std::vector<MenuItem> &Order::getItems() const {
-    return Items;
-}
-
-void Order::setItems(const std::vector<MenuItem> &newItems) {
-    Items = newItems;
+    staticOrderId++;
+    this->orderId = staticOrderId;
 }
 
 
-// Other vector methods:
+
+// Initialisation of static orderId field :
+int Order::staticOrderId = 100;
+
+
+
+// Getters :
+// Items field :
+const  std::vector< std::shared_ptr<MenuItem> > &Order::getItems() const {
+    return this->Items;
+}
+
+
+// Other vector methods :
 void Order::clearOrder() {
     Items.clear();
 }
 
 void Order::addItem(MenuItem &item) {
-    Items.emplace_back(item);
+    Items.emplace_back(&item);
 }
 
-void Order::removeItem(MenuItem &item) {
+void Order::removeItem( std::shared_ptr<MenuItem> item) {
 
     for (auto it = Items.begin(); it != Items.end(); it++) {
         if (item == *it) {
@@ -54,10 +62,10 @@ void Order::removeItem(MenuItem &item) {
     }
 }
 
-void Order::replaceItem(MenuItem &oldItem, MenuItem &newItem) {
+void Order::replaceItem( std::shared_ptr<MenuItem> oldItem, std::shared_ptr<MenuItem> newItem) {
 
     for (auto &Item: Items) {
-        if (oldItem == Item) {
+        if ( oldItem == Item) {
             Item = newItem;
             break;
         }
@@ -68,38 +76,55 @@ float Order::calculatePrice() {       // the float sum of the prices of order it
 
     float price = 0;
     for (auto &Item: Items)
-        price += (Item.getPieces() * Item.getPrice());
+        price += (Item->getPieces() * Item->getPrice());
 
     return price;
 }
 
-std::chrono::minutes Order::calculateTimpPreparareComanda() {
+std::chrono::minutes Order::calculatePreparationTime() {
 
     // I am defining the preparation time of an order, as the maximum between the preparations times of each item of an Order
 
-    std::chrono::minutes maximum = Items[0].getPreparationTime();
+    std::chrono::minutes maximum = Items[0]->getPreparationTime();
 
     for (auto &Item: Items)
-        if (Item.getPreparationTime() > maximum)
-            maximum = Item.getPreparationTime();
+        if (Item->getPreparationTime() > maximum)
+            maximum = Item->getPreparationTime();
 
     return maximum;
 }
 
-int Order::orderItems() const {
-    return this->Items.size();
+
+// Operators :
+Order &Order::operator=(const Order &otherOrder) {
+
+    staticOrderId++;
+    this->orderId = staticOrderId;
+    this->Items = otherOrder.Items;
+
+    return *this;
 }
 
 
-// Operators :
+std::ostream &operator<<(std::ostream &out, const Order &order) {
 
-std::ostream &operator<<(std::ostream &os, const Order &order) {
-    os << "The order with the id: " << order.orderId << " is made out of the next items: " << '\n';
+    if( !order.Items.empty() )
+    {
 
-    for (const auto &Item: order.Items)
-        os << Item << ", ";
-    os << ".\n";
+        out << "The order with the id: " << order.orderId << " is made out of the next items: " << '\n';
+        auto it = order.getItems().begin();
 
-    return os;
+        while (it != prev(order.getItems().end())) {
+
+            std::cout << (**it) << "; ";
+            ++it;
+        }
+
+        std::cout << (**it) << ".\n\n";
+    }
+    else
+        out << "The order is empty!\n\n";
+
+    return out;
 }
 

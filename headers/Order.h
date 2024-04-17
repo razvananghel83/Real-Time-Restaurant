@@ -7,84 +7,57 @@
 
 #include "MenuItem.h"
 #include <vector>
+#include <memory>
 
 
 class Order {
 
 private:
+
+    std::vector< std::shared_ptr<MenuItem> > Items;
     int orderId{0};
-    std::vector<MenuItem> Items;
+    static int staticOrderId;
 
 
 public:
 
-    /* Every Items field will have 5 locations reserved for it in the memory because I considered that most people tipically order maximum
-     * 5 MenuItems, beverages included. In other words, I am assuming that a client will order:
-     * First Beverage, First course, Second Beverage, Second Course, Desert
-     */
-
     // Construstors:
 
     // Default constructor:
-    Order() = default;
+    Order();
 
     // Constructor with parametres :
-    Order(int id)
-            : orderId(id) {
-    }
-
-    Order(int id, std::vector<MenuItem> &Items)
-            : orderId(id), Items(Items) {
-    }
+    Order(int id,  std::vector< std::shared_ptr<MenuItem> > list) = delete;     // deleted because the id will be implemented automatically via the staticId field
+    Order(  std::vector< std::shared_ptr<MenuItem> > list );
 
     // Copy constructor :
-    Order(Order &order)
-            : orderId(order.orderId), Items(order.Items) {
-
-    }
+    Order(Order &order);
 
     // Destructor :
     ~Order() = default;
 
 
 
-
-    // Getters and setters:
-
-
-    // Order_Id field:
-    int getOrderId() const;
-
-    void setOrderId(int newOrderId);
-
-
+    // Getters:
     // Items field:
-    const std::vector<MenuItem> &getItems() const;
-
-    void setItems(const std::vector<MenuItem> &newItems);
+    [[nodiscard]] const std::vector< std::shared_ptr<MenuItem> > &getItems() const;
 
 
-    // Other vector methods:
+    // Other vector methods :
     void clearOrder();
-
     void addItem(MenuItem &item);
 
-    void removeItem(MenuItem &item);
+    void removeItem( std::shared_ptr<MenuItem>item );
+    void replaceItem( std::shared_ptr<MenuItem> oldItem, std::shared_ptr<MenuItem> newItem);
 
-    void replaceItem(MenuItem &oldItem, MenuItem &newItem);
-
-    float calculatePrice();      // the float sum of the prices of order items
-
-
-    std::chrono::minutes calculateTimpPreparareComanda();
+    [[nodiscard]] float calculatePrice();      // the float sum of the prices of order items
+    [[nodiscard]] std::chrono::minutes calculatePreparationTime();
     // I am defining the preparation time of an order, as the maximum between the preparations times of each item of an Order
 
 
-    int orderItems() const;
-
 
     // Operators :
-    Order &operator=(const Order &otherOrder) = default;
+    [[nodiscard]] Order &operator=(const Order &otherOrder);
 
     friend std::ostream &operator<<(std::ostream &os, const Order &order);
 

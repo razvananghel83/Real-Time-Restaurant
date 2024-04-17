@@ -5,39 +5,58 @@
 #include "../headers/Table.h"
 
 
-// Getters and setters :
+int Table::staticId = 0;
 
-// Id field :
-int Table::getId() const {
-    return this->tableId;
-}
 
-void Table::setId(int newId) {
-    this->tableId = newId;
-}
+// Constructors :
 
-// Occupied field :
-bool Table::getOccupied() const {
-    return this->occupied;
-}
+// Default constructor :
+    Table::Table() {
 
-void Table::setOccupied(bool newState) {
-    this->occupied = newState;
-}
+        staticId++;
+        this->tableId = staticId;
+    }
 
-void Table::placeOrder(Order &order) {
+// Constructor parametrizabil :
+    Table::Table(bool occupied, Order &order)
+            : occupied( occupied ), order( order ) {
 
-}
+        staticId++;
+        this->tableId = staticId;
+    }
+
+// Copy constructor :
+    Table::Table(Table &otherTable)
+            : occupied( otherTable.occupied ), order( otherTable.order )  {
+
+        staticId++;
+        this->tableId = staticId;
+    }
+
 
 // Operators :
 
-std::ostream& operator<<(std::ostream &out, const Table &table) {
-    if (table.occupied == 1)
-        out << "The table with the id: " << table.tableId << " is occupied and has the order:\n" << table.order
+    Table &Table::operator=(const Table &otherTable) {
+
+    this->occupied = otherTable.occupied;
+    this->order = otherTable.order;
+
+    return *this;
+}
+
+    std::ostream& operator<<(std::ostream &out, const Table &table) {
+
+    if (table.occupied == true)
+        out << "The table with the id " << table.tableId << " is occupied and has the order:\n" << table.order
             << "\n.";
     else
-        out << "The table with the id: " << table.tableId << " is free.\n";
+        out << "The table with the id " << table.tableId << " is free and has no orders.\n";
 
     return out;
 }
+
+
+
+
+
 

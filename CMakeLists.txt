@@ -8,4 +8,13 @@ add_executable(Real_Time_Restaurant_v1 main.cpp
         sources/Menu.cpp
         sources/MenuItem.cpp
         sources/Order.cpp
-        sources/Table.cpp)
+        sources/Table.cpp
+        headers/MyExceptions.h
+        headers/Desert.h
+        headers/MainCourse.h
+        headers/FirstCourse.h
+        sources/FirstCourse.cpp
+        sources/MainCourse.cpp
+        headers/Drinks.h
+        sources/Drinks.cpp
+        sources/Desert.cpp)
