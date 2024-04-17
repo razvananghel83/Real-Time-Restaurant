@@ -19,7 +19,6 @@ const std::vector<MenuItem> &Menu::getMenuList() const {
 
 
 // Class methods :
-
 void Menu::readMenu(std::basic_ifstream<char> &file) {
 
     try {

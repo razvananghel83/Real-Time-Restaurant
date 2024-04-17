@@ -7,8 +7,13 @@
 using namespace std::chrono;   // For using 'min' literal, which refers to minutes
 
 
-// unde pun operatorul pentru std::chrono
-// orders[ 1 ] modifica orders[ 2 ]
+// unde pun operatorul pentru std::chrono? Acum e in MenuItem.h
+// E ok daca am folosit operatorul >> pentru o alta afisare?
+// orders[ 1 ] modifica orders[ 2 ] ( linia 37 )
+// Probleme github actions
+// Trebuie ca operatorul = sa copieze si id-ul sau sa faca unul nou? Exemplu: MenuItem.cpp
+// Cum scriu documentatia pentru clase? Toate campurile deasupra clasei sau fiecare camp individual?
+
 int main() {
 
     std::ifstream f( "menu.txt" );

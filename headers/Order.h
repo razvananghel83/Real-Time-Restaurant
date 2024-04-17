@@ -26,8 +26,9 @@ public:
     // Default constructor:
     Order();
 
-    // Constructor with parametres :
-    Order(int id,  std::vector< std::shared_ptr<MenuItem> > list) = delete;     // deleted because the id will be implemented automatically via the staticId field
+    /// Constructor with parametres : \n
+    /// deleted because the id will be implemented automatically via the staticId field
+    Order(int id,  std::vector< std::shared_ptr<MenuItem> > list) = delete;
     Order(  std::vector< std::shared_ptr<MenuItem> > list );
 
     // Copy constructor :

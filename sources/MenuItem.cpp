@@ -85,7 +85,7 @@ MenuItem::MenuItem(MenuItem const &Item)
     this->itemId = staticItemId;
 }
 
-// Initialisation of staticItemId field:
+/// Initialisation of staticItemId field:
 int MenuItem::staticItemId = 10;
 
 
@@ -126,6 +126,7 @@ MenuItem& MenuItem::operator=(const MenuItem &Item) {
 
     return *this;
 }
+
 // unde sa pun operatorul acesta? Din main nu e accesibil decat daca il copiez si acolo
 std::ostream &operator<<(std::ostream &out, const std::chrono::minutes &duration) {
 

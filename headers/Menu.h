@@ -15,38 +15,50 @@
 class Menu {
 
 private:
+
+    /// This is the only field inside the Menu class, a a std::vector of MenuItems \n
     std::vector<MenuItem> MenuList;
 
 public:
 
     // Constructors :
 
-    // Default constructor :
+    /// Default constructor for menu class \n
+    /// Called to reserve space for all of the items that will be read in the menu.
     Menu();
 
-    // Constructor with parametres :
+    /// Constructor with parametres : \n
+    /// Deleted because it has not been used
     Menu( std::vector<MenuItem>& list ) = delete;
-    // Deleted because it has not been used
 
-    // Copy constructor :
-    // A single menu will be implemented so a copy constructor is not necessary
+    /// Copy constructor : \n
+    /// A single menu will be implemented so a copy constructor is not necessary
     Menu( const Menu& otherMenu ) = delete;
 
-    // Destructor :
+    /// Destructor for menu
     ~Menu() = default;
 
 
-    // Getter for the list of items :
+    /// Getter for the list of items inside the menu : \n
+    /// Returns a const std::vector which contains all the items in the Menu
     [[nodiscard]] const std::vector<MenuItem> &getMenuList() const;
 
 
     // Class methods :
+
+    /// Reads all the menu items from an input file. \n
+    /// In this file, a MenuItem is written on a single line, in the following form : \n
+    /// Name; Category; Price; Pieces( set by default to 1 ); Quantity; Preparation time
     void readMenu( std::basic_ifstream<char>& file );
 
 
     // Operators :
-    // A single menu will be implemented so this operator is not necessary
+    /// A single menu will be implemented so this operator is not necessary
     Menu& operator = (const Menu &otherMenu) = delete;
+
+    /// Operator that is used to print the entire menu \n
+    /// It uses the operator >> for each MenuItem it prints so all of the fields of each MenuItem will be printed,
+    /// not just the name.
     friend std::ostream& operator << (std::ostream& out, const Menu& menu);
 
 };
