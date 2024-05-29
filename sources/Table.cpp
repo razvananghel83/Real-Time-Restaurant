@@ -4,29 +4,28 @@
 
 #include "../headers/Table.h"
 
-
 int Table::staticId = 0;
 
 
 // Constructors :
 
 // Default constructor :
-    Table::Table() {
+Table::Table() {
 
-        staticId++;
-        this->tableId = staticId;
-    }
+    staticId++;
+    this->tableId = staticId;
+}
 
 // Constructor parametrizabil :
-    Table::Table(bool occupied, Order &order)
+Table::Table(bool occupied, Order &order)
             : occupied( occupied ), order( order ) {
 
-        staticId++;
-        this->tableId = staticId;
-    }
+                staticId++;
+                this->tableId = staticId;
+            }
 
 // Copy constructor :
-    Table::Table(Table &otherTable)
+Table::Table(Table &otherTable)
             : occupied( otherTable.occupied ), order( otherTable.order )  {
 
         staticId++;
@@ -35,8 +34,7 @@ int Table::staticId = 0;
 
 
 // Operators :
-
-    Table &Table::operator=(const Table &otherTable) {
+Table& Table::operator=(const Table &otherTable) {
 
     this->occupied = otherTable.occupied;
     this->order = otherTable.order;
@@ -44,9 +42,9 @@ int Table::staticId = 0;
     return *this;
 }
 
-    std::ostream& operator<<(std::ostream &out, const Table &table) {
+std::ostream& operator<<(std::ostream &out, const Table &table) {
 
-    if (table.occupied == true)
+    if ( table.occupied )
         out << "The table with the id " << table.tableId << " is occupied and has the order:\n" << table.order
             << "\n.";
     else
@@ -54,9 +52,3 @@ int Table::staticId = 0;
 
     return out;
 }
-
-
-
-
-
-

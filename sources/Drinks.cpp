@@ -4,8 +4,25 @@
 
 #include "../headers/Drinks.h"
 
+template <typename T>
+std::string Drinks<T>::unit = "ml";
 
-float Drinks::getCalories() {
+template <typename T>
+Drinks<T>::Drinks( const MenuItem &item, int alcohol )
+    : MenuItem(item), alcohol( alcohol ) {
 
+}
+
+template <typename T>
+Drinks<T>::Drinks( const std::string &name, const std::string &category, float price, int quantity, const minutes &preparationTime, int alcohol )
+        : MenuItem(name, category, price, quantity, preparationTime), alcohol( alcohol ) {
+
+}
+
+
+template <typename T>
+float Drinks<T>::getCalories() {
+
+    // sugar calories + other ingredients
     return this->quantity / 4 + this->quantity * 0.87;
 }

@@ -15,15 +15,14 @@ Order::Order() {
 }
 
 // Constructor with parametres :
-Order::Order(  const std::vector< std::shared_ptr<MenuItem> >& list)  : Items(list)  {
+Order::Order(  const std::vector< std::shared_ptr<OrderItem> >& list) : Items(list)  {
 
     staticOrderId++;
     this->orderId = staticOrderId;
 }
 
 // Copy constructor :
-Order::Order (Order &order)
-    : Items(order.Items){
+Order::Order (Order &order) : Items( order.Items ){
 
     staticOrderId++;
     this->orderId = staticOrderId;
@@ -38,7 +37,7 @@ int Order::staticOrderId = 100;
 
 // Getters :
 // Items field :
-const  std::vector< std::shared_ptr<MenuItem> > &Order::getItems() const {
+const  std::vector< std::shared_ptr<OrderItem> > &Order::getItems() const {
     return this->Items;
 }
 
@@ -48,11 +47,11 @@ void Order::clearOrder() {
     Items.clear();
 }
 
-void Order::addItem(MenuItem &item) {
+void Order::addItem( OrderItem &item ) {
     Items.emplace_back(&item);
 }
 
-void Order::removeItem( std::shared_ptr<MenuItem> item) {
+void Order::removeItem( std::shared_ptr<OrderItem> item) {
 
     for (auto it = Items.begin(); it != Items.end(); it++) {
         if (item == *it) {
@@ -62,7 +61,8 @@ void Order::removeItem( std::shared_ptr<MenuItem> item) {
     }
 }
 
-void Order::replaceItem( std::shared_ptr<MenuItem> oldItem, std::shared_ptr<MenuItem> newItem) {
+// modificare cu index
+void Order::replaceItem( std::shared_ptr<OrderItem> oldItem, std::shared_ptr<OrderItem> newItem) {
 
     for (auto &Item: Items) {
         if ( oldItem == Item) {
@@ -76,7 +76,7 @@ float Order::calculatePrice() {       // the float sum of the prices of order it
 
     float price = 0;
     for (auto &Item: Items)
-        price += (Item->getPieces() * Item->getPrice());
+        price += (Item->getNumber() * Item->getPrice());
 
     return price;
 }
@@ -95,13 +95,18 @@ std::chrono::minutes Order::calculatePreparationTime() {
 }
 
 
+void Order::addTime(std::chrono::minutes extraMinutes) {
+
+        this->timerTime += extraMinutes;
+}
+
+
+
+
 // Operators :
 Order &Order::operator=(const Order &otherOrder) {
 
-    staticOrderId++;
-    this->orderId = staticOrderId;
     this->Items = otherOrder.Items;
-
     return *this;
 }
 
@@ -127,4 +132,5 @@ std::ostream &operator<<(std::ostream &out, const Order &order) {
 
     return out;
 }
+
 

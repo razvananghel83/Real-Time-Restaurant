@@ -3,8 +3,11 @@
 //
 
 #include "../headers/Menu.h"
-#include "../headers/MyExceptions.h"
-
+#include "../headers/FirstCourse.h"
+#include "../headers/Drinks.h"
+#include "../headers/Desert.h"
+#include "../headers/MainCourse.h"
+#include <vector>
 
 Menu::Menu() {
 
@@ -21,19 +24,12 @@ const std::vector<MenuItem> &Menu::getMenuList() const {
 // Class methods :
 void Menu::readMenu(std::basic_ifstream<char> &file) {
 
-    try {
-        if( !file.is_open() )
-            throw FileNotOpened();
-    }
-    catch ( FileNotOpened& e ) {
-        std::cout << e.what();
-    }
 
     std::string line;
 
     while (std::getline(file, line)) {
 
-        // reads an actual MenuItem as a string
+        // reads an actual Item as a string
 
         std::vector<std::string> sections;
         std::istringstream stringStream(line);
@@ -53,17 +49,19 @@ void Menu::readMenu(std::basic_ifstream<char> &file) {
 
         int number = 0;
 
-        for (int index = 0; isdigit(sections[5][index]); index++) {
+        for (int index = 0; isdigit(sections[4][index]); index++) {
 
-            int digit = sections[5][index] - 48;
+            int digit = sections[4][index] - 48;
             number = number * 10 + digit;
         }
 
         std::chrono::minutes duration(number);
 
-        this->MenuList.emplace_back(sections[0], sections[1], std::stof(sections[2]),
-                                    std::stoi( sections[ 3 ] ), std::stoi(sections[4]),
-                                    duration);
+
+        this->MenuList.emplace_back( sections[0], sections[1], std::stof(sections[2]),
+                                     std::stoi(sections[3]), duration);
+
+
         std::getline(file, line);  // reads an empty new line
     }
 
@@ -73,12 +71,10 @@ void Menu::readMenu(std::basic_ifstream<char> &file) {
 
 // Operators :
 
-
 std::ostream &operator<<(std::ostream &out, const Menu &menu) {
 
     out << "The list of items available to order is: \n";
     auto it = menu.getMenuList().begin();
-
 
     while (it != std::prev(menu.getMenuList().end())) {
         out >> (*it);

@@ -10,13 +10,23 @@
 class Desert : public MenuItem {
 
 private:
-
+    /// The unit for deserts is grams.
     static std::string unit;
 
 public:
-    float getCalories() override;
-};
 
-std::string Desert::unit = "g";
+    // Constructors:
+    /// Default constructor which calls Item's constructor.
+    Desert();
+
+    /// Copy constructor which calls Item's copy constructor.
+    explicit Desert(const MenuItem &item);
+
+    /// Constructor with parameters which calls Item's constructor with parameterss.
+    Desert(const std::string &name, const std::string &category, float price, int quantity,
+           const minutes &preparationTime);
+
+    float getCalories();
+};
 
 #endif //REAL_TIME_RESTAURANT_V1_DESERT_H
