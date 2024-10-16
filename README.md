@@ -1,5 +1,5 @@
-# Descriere proiect:
-O aplicație C++ care poate adăuga utilitate unui restaurant prin vizualizarea în timp real a comenzilor de la clienți de către bucătărie, dar și afișarea timpului de preparare pentru fiecare comandă, de la fiecare masă. A plicația permite clientului să comande mâncarea dorită și personalului din bucătărie să modifice timpul de preparare.
+# Project description:
+A C++ application that can add utility to a restaurant by allowing the kitchen to view orders from the customers in real-time. The app can also show the remaining preparation time for each order, from each table ( this feature is currently under development; only communication between two PCs has been implemented so far ). The client can also order food via the app and the kitchen personnel has the possibility to modify the preparation time of the order. This repo is a modified form of a template provided by my university.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
